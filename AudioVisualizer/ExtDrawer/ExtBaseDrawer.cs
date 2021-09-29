@@ -92,7 +92,6 @@ namespace AudioVisualizer.ExtDrawer
                 sb.Append(SplitChar);
             }
             sb.Append(StopChar.ToString());
-            sb.Append(StopChar.ToString());
 
             return sb.ToString();
         }
