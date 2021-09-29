@@ -36,7 +36,7 @@ namespace AudioVisualizer.AudioSpectrum
 
         private static List<string> deviceList;
         private static readonly object locker = new object();
-        
+
         public static bool Start(string deviceName)
         {
             if (IsInit == false)
@@ -49,6 +49,7 @@ namespace AudioVisualizer.AudioSpectrum
 
                 if (isInit == false)
                 {
+                    IsInit = false;
                     return false;
                 }
             }
@@ -73,6 +74,11 @@ namespace AudioVisualizer.AudioSpectrum
                         IsInit = true;
                     }
                 }
+                else
+                {                    
+                    IsInit = false;
+                    return false;
+                }
             }
 
             return true;
@@ -93,7 +99,8 @@ namespace AudioVisualizer.AudioSpectrum
                         var device = BassWasapi.BASS_WASAPI_GetDeviceInfo(i);
                         if (device.IsEnabled && device.IsLoopback)
                         {
-                            deviceList.Add(string.Format("{0} - {1}", i, device.name));
+                            string deviceName = System.Text.RegularExpressions.Regex.Replace(device.name, @"[^\u0020-\u007E]", string.Empty);
+                            deviceList.Add(string.Format("{0} - {1}", i, deviceName));
                         }
                     }
                 }
