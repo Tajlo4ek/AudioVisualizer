@@ -43,7 +43,7 @@ namespace AudioVisualizer.AudioSpectrum
         public void LoadDefault()
         {
             ActiveDeviceName = "";
-            FftDataSize = FftConfig.FftDataSizes.FFT_2048;
+            FftDataSize = FftConfig.FftDataSizes.FFT_8192;
             onEdit?.Invoke();
         }
 
@@ -55,6 +55,11 @@ namespace AudioVisualizer.AudioSpectrum
                 config = JsonConvert.DeserializeObject<AnalyzerDataConfig>(json);
             }
             catch (Exception)
+            {
+                config = null;
+            }
+
+            if (config == null)
             {
                 config = new AnalyzerDataConfig();
                 config.LoadDefault();

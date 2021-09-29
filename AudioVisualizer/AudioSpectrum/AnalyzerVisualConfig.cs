@@ -140,13 +140,14 @@ namespace AudioVisualizer.AudioSpectrum
 
         public void LoadDefault()
         {
-            SetColumnConfig(2, 10);
-            SetRectConfig(2, 5);
+            SetColumnConfig(2, 6);
+            SetRectConfig(1, 1);
 
             LowLevelColor = Color.Green;
             MediumLevelColor = Color.Yellow;
             HighLevelColor = Color.Red;
             MaxLevelColor = Color.FromArgb(255, 0, 255, 255);
+            Gain = 1;
 
             BackgroundColor = Color.Black;
 
@@ -197,12 +198,13 @@ namespace AudioVisualizer.AudioSpectrum
             try
             {
                 config = JsonConvert.DeserializeObject<AnalyzerVisualConfig>(json);
-                if (config == null)
-                {
-                    throw new Exception("json empty");
-                }
             }
             catch (Exception)
+            {
+                config = null;
+            }
+
+            if (config == null)
             {
                 config = new AnalyzerVisualConfig();
                 config.LoadDefault();
