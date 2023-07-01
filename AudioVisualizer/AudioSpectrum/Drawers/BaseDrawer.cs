@@ -44,7 +44,7 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
             this.dataConfig = dataConfig;
         }
 
-        public void SetVisualConfig(AnalyzerVisualConfig visualConfig)
+        public virtual void SetVisualConfig(AnalyzerVisualConfig visualConfig)
         {
             this.visualConfig = visualConfig;
         }

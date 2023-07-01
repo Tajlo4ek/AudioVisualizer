@@ -21,9 +21,6 @@ namespace AudioVisualizer.AudioSpectrum
         public SolidBrush LowBrush { get; private set; }
 
         [JsonIgnore]
-        public SolidBrush MediumBrush { get; private set; }
-
-        [JsonIgnore]
         public SolidBrush HighBrush { get; private set; }
 
         [JsonIgnore]
@@ -65,6 +62,7 @@ namespace AudioVisualizer.AudioSpectrum
             set
             {
                 BackgroundBrush.Color = value;
+                onEdit?.Invoke();
             }
         }
 
@@ -78,19 +76,7 @@ namespace AudioVisualizer.AudioSpectrum
             set
             {
                 LowBrush.Color = value;
-            }
-        }
-
-        [JsonProperty]
-        public Color MediumLevelColor
-        {
-            get
-            {
-                return MediumBrush.Color;
-            }
-            set
-            {
-                MediumBrush.Color = value;
+                onEdit?.Invoke();
             }
         }
 
@@ -104,6 +90,7 @@ namespace AudioVisualizer.AudioSpectrum
             set
             {
                 HighBrush.Color = value;
+                onEdit?.Invoke();
             }
         }
 
@@ -118,6 +105,7 @@ namespace AudioVisualizer.AudioSpectrum
             {
                 MaxBrush.Color = value;
                 MaxPen.Color = value;
+                onEdit?.Invoke();
             }
         }
 
@@ -125,7 +113,6 @@ namespace AudioVisualizer.AudioSpectrum
         public AnalyzerVisualConfig()
         {
             LowBrush = new SolidBrush(Color.Empty);
-            MediumBrush = new SolidBrush(Color.Empty);
             HighBrush = new SolidBrush(Color.Empty);
             MaxBrush = new SolidBrush(Color.Empty);
             BackgroundBrush = new SolidBrush(Color.Empty);
@@ -144,7 +131,6 @@ namespace AudioVisualizer.AudioSpectrum
             SetRectConfig(1, 1);
 
             LowLevelColor = Color.Green;
-            MediumLevelColor = Color.Yellow;
             HighLevelColor = Color.Red;
             MaxLevelColor = Color.FromArgb(255, 0, 255, 255);
             Gain = 1;

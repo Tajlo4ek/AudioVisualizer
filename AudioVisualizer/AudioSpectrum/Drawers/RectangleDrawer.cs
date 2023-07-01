@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace AudioVisualizer.AudioSpectrum.Drawers
 {
@@ -12,11 +13,25 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
         private const float pbPart = 0.8f;
 
         private float scaleCoefY;
-        private int maxCountRect;
 
         private RectangleF[] gridRects;
+        private LinearGradientBrush backgroundBrush;
+
+        private void UpdateBackBrush() {
+            backgroundBrush = new LinearGradientBrush(
+               new PointF(0, CurrentImage.Height),
+               new PointF(0, CurrentImage.Height * (1 - pbPart)),
+               visualConfig.LowLevelColor,
+               visualConfig.HighLevelColor);
+        }
 
         public override AnalyzerVisualConfig.VisualStyle VisualStyle { get { return AnalyzerVisualConfig.VisualStyle.Rectangle; } }
+
+        public override void SetVisualConfig(AnalyzerVisualConfig visualConfig)
+        {
+            base.SetVisualConfig(visualConfig);
+            UpdateBackBrush();
+        }
 
         public override void CreateCurrentImage(Spectrum leftSpectrum, Spectrum rightSpectrum)
         {
@@ -41,7 +56,6 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
             }
 
             scaleCoefY = (size.Height * pbPart) / 100;
-            maxCountRect = (int)Math.Floor(size.Height * pbPart / (visualConfig.RectHeight + visualConfig.RectSpace));
 
             var gridRects = new List<RectangleF>();
             var yPos = visualConfig.RectHeight + visualConfig.RectSpace;
@@ -58,6 +72,7 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
             }
 
             this.gridRects = gridRects.ToArray();
+            UpdateBackBrush();
         }
 
 
@@ -146,73 +161,25 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
                 return new int[0];
             }
 
+            var backRect = new RectangleF[spectrumCurData.Length];
             var rectsCount = new int[spectrumCurData.Length];
-            var lowRects = new RectangleF[spectrumCurData.Length];
-            var mediumRects = new RectangleF[spectrumCurData.Length];
-            var highRects = new RectangleF[spectrumCurData.Length];
 
             for (int spectrumInd = 0; spectrumInd < spectrumCurData.Length; spectrumInd++)
             {
                 float baseCurLen = spectrumCurData[spectrumInd];
-                float curLen = baseCurLen * scaleCoefY;
+                int countRect = (int)(baseCurLen * scaleCoefY / (visualConfig.RectSpace + visualConfig.RectHeight));
+                float curLen = countRect * (visualConfig.RectSpace + visualConfig.RectHeight);
 
-                int y = 0;
-                int nowSquare = 0;
+                backRect[spectrumInd] = new RectangleF(
+                    spectrumInd * (visualConfig.ColWidth + visualConfig.ColSpace) + offset,
+                    CurrentImage.Height - curLen,
+                    visualConfig.ColWidth,
+                    curLen);
 
-                var lowRect = new RectangleF(
-                        spectrumInd * (visualConfig.ColWidth + visualConfig.ColSpace) + offset,
-                        CurrentImage.Height,
-                        visualConfig.ColWidth,
-                        0);
-
-                var mediumRect = new RectangleF(
-                        spectrumInd * (visualConfig.ColWidth + visualConfig.ColSpace) + offset,
-                        CurrentImage.Height,
-                        visualConfig.ColWidth,
-                        0);
-
-                var highRect = new RectangleF(
-                        spectrumInd * (visualConfig.ColWidth + visualConfig.ColSpace) + offset,
-                        CurrentImage.Height,
-                        visualConfig.ColWidth,
-                        0);
-
-                while (y < curLen && baseCurLen > 0.5f)
-                {
-                    if (nowSquare > 2f * maxCountRect / 3f)
-                    {
-                        highRect.Height += visualConfig.RectSpace + visualConfig.RectHeight;
-                        highRect.Y -= visualConfig.RectSpace + visualConfig.RectHeight;
-                    }
-                    else if (nowSquare > maxCountRect / 3f)
-                    {
-                        mediumRect.Height += visualConfig.RectSpace + visualConfig.RectHeight;
-                        mediumRect.Y -= visualConfig.RectSpace + visualConfig.RectHeight;
-                    }
-                    else
-                    {
-                        lowRect.Height += visualConfig.RectSpace + visualConfig.RectHeight;
-                        lowRect.Y -= visualConfig.RectSpace + visualConfig.RectHeight;
-                    }
-
-                    y += (visualConfig.RectHeight + visualConfig.RectSpace);
-                    nowSquare++;
-                }
-
-                rectsCount[spectrumInd] = nowSquare;
-
-                mediumRect.Y -= lowRect.Height;
-                highRect.Y -= lowRect.Height;
-                highRect.Y -= mediumRect.Height;
-
-                lowRects[spectrumInd] = lowRect;
-                mediumRects[spectrumInd] = mediumRect;
-                highRects[spectrumInd] = highRect;
+                rectsCount[spectrumInd] = countRect;
             }
 
-            mainGraphics.FillRectangles(visualConfig.LowBrush, lowRects);
-            mainGraphics.FillRectangles(visualConfig.MediumBrush, mediumRects);
-            mainGraphics.FillRectangles(visualConfig.HighBrush, highRects);
+            mainGraphics.FillRectangles(backgroundBrush, backRect);
 
             return rectsCount;
         }

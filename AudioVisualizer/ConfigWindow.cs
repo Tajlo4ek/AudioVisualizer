@@ -126,16 +126,6 @@ namespace AudioVisualizer
             }
         }
 
-        private void BtnColorMed_Click(object sender, EventArgs e)
-        {
-            colorDialog.Color = visualConfigurator.MediumLevelColor;
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                visualConfigurator.MediumLevelColor = colorDialog.Color;
-                SaveConfig();
-            }
-        }
-
         private void BtnColorL_Click(object sender, EventArgs e)
         {
             colorDialog.Color = visualConfigurator.LowLevelColor;

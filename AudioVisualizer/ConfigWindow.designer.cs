@@ -38,7 +38,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.nudColCount = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
-            this.btnColorMed = new System.Windows.Forms.Button();
             this.btnColorL = new System.Windows.Forms.Button();
             this.btnColorMax = new System.Windows.Forms.Button();
             this.btnColorH = new System.Windows.Forms.Button();
@@ -201,19 +200,9 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "column width";
             // 
-            // btnColorMed
-            // 
-            this.btnColorMed.Location = new System.Drawing.Point(6, 48);
-            this.btnColorMed.Name = "btnColorMed";
-            this.btnColorMed.Size = new System.Drawing.Size(75, 23);
-            this.btnColorMed.TabIndex = 10;
-            this.btnColorMed.Text = "Medium";
-            this.btnColorMed.UseVisualStyleBackColor = true;
-            this.btnColorMed.Click += new System.EventHandler(this.BtnColorMed_Click);
-            // 
             // btnColorL
             // 
-            this.btnColorL.Location = new System.Drawing.Point(87, 19);
+            this.btnColorL.Location = new System.Drawing.Point(6, 19);
             this.btnColorL.Name = "btnColorL";
             this.btnColorL.Size = new System.Drawing.Size(75, 23);
             this.btnColorL.TabIndex = 12;
@@ -233,7 +222,7 @@
             // 
             // btnColorH
             // 
-            this.btnColorH.Location = new System.Drawing.Point(6, 19);
+            this.btnColorH.Location = new System.Drawing.Point(87, 19);
             this.btnColorH.Name = "btnColorH";
             this.btnColorH.Size = new System.Drawing.Size(75, 23);
             this.btnColorH.TabIndex = 14;
@@ -245,19 +234,18 @@
             // 
             this.groupBox1.Controls.Add(this.btnColorBack);
             this.groupBox1.Controls.Add(this.btnColorH);
-            this.groupBox1.Controls.Add(this.btnColorMed);
             this.groupBox1.Controls.Add(this.btnColorMax);
             this.groupBox1.Controls.Add(this.btnColorL);
             this.groupBox1.Location = new System.Drawing.Point(218, 51);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(174, 131);
+            this.groupBox1.Size = new System.Drawing.Size(174, 79);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Color edit";
             // 
             // btnColorBack
             // 
-            this.btnColorBack.Location = new System.Drawing.Point(6, 77);
+            this.btnColorBack.Location = new System.Drawing.Point(6, 48);
             this.btnColorBack.Name = "btnColorBack";
             this.btnColorBack.Size = new System.Drawing.Size(75, 23);
             this.btnColorBack.TabIndex = 15;
@@ -448,7 +436,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown nudColCount;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button btnColorMed;
         private System.Windows.Forms.Button btnColorL;
         private System.Windows.Forms.Button btnColorMax;
         private System.Windows.Forms.Button btnColorH;
