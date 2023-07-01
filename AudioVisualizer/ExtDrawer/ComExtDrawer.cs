@@ -4,8 +4,7 @@ using System.IO.Ports;
 namespace AudioVisualizer.ExtDrawer
 {
     class ComExtDrawer : ExtBaseDrawer
-    {
-        readonly string SetModeCommand = "startSpectrum" + StopChar;
+    {      
 
         readonly SerialPort serialPort;
         string serialData;
@@ -27,8 +26,6 @@ namespace AudioVisualizer.ExtDrawer
                 serialPort.DtrEnable = true;
                 serialPort.Open();
 
-                serialPort.Write(SetModeCommand);
-
                 serialPort.DataReceived += SerialPort_DataReceived;
             }
             catch (Exception ex)
@@ -46,6 +43,7 @@ namespace AudioVisualizer.ExtDrawer
             {
                 var ch = (char)serialPort.ReadChar();
 
+
                 if (ch == StopChar)
                 {
                     AnalyseData(serialData);
@@ -55,13 +53,25 @@ namespace AudioVisualizer.ExtDrawer
                 {
                     serialData += ch;
                 }
+
+                if (serialData.Length != 0)
+                {
+
+                    Console.Error.WriteLine(serialData);
+                }
+
+
             }
         }
 
 
         public override void SendData(string data)
         {
-            if (serialPort.IsOpen == false) { return; }
+            if (serialPort.IsOpen == false)
+            {
+                Console.WriteLine("port close");
+                return;
+            }
 
             try
             {
@@ -70,6 +80,7 @@ namespace AudioVisualizer.ExtDrawer
             catch (TimeoutException)
             {
                 haveError = true;
+                Console.WriteLine("error");
                 serialPort.Close();
             }
 

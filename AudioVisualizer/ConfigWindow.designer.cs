@@ -338,6 +338,7 @@
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.cbExtDrawerType);
             this.groupBox3.Controls.Add(this.btnExtDrawerSet);
+            this.groupBox3.Enabled = false;
             this.groupBox3.Location = new System.Drawing.Point(398, 51);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(174, 131);

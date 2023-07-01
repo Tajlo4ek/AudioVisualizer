@@ -12,6 +12,7 @@ namespace AudioVisualizer.ExtDrawer
         protected readonly string SetLineCountCommand = "line";
         protected readonly string SetMaxDataCommand = "maxData";
         protected readonly string SendSpectrumCommand = "sendSpectrum";
+        protected readonly string SetModeCommand = "startSpectrum" + StopChar;
 
         protected string url;
 
@@ -55,10 +56,14 @@ namespace AudioVisualizer.ExtDrawer
         {
             if (haveError == false)
             {
-                Analyzer.GetSpectrum(lineCount, gain, fftConfig, ref leftSpectrum, ref rightSpectrum);
+
                 if (lineCount > 0 && Scale > 0)
                 {
+                    Analyzer.GetSpectrum(lineCount, gain, fftConfig, ref leftSpectrum, ref rightSpectrum);
                     SendData(GetDataString());
+                }
+                else {
+                    SendData(SetModeCommand);
                 }
             }
         }
@@ -98,7 +103,10 @@ namespace AudioVisualizer.ExtDrawer
 
         protected void AnalyseData(String data)
         {
-            Console.WriteLine(data);
+            if (data.Length != 0)
+            {
+                Console.WriteLine(data);
+            }
 
             if (data.StartsWith(SetLineCountCommand))
             {

@@ -126,8 +126,10 @@ namespace AudioVisualizer.AudioSpectrum
 
         private void OnExtEdit()
         {
+
             extDrawer?.Dispose();
-            try
+            return;
+            /*try
             {
                 switch (ExtConfig.Type)
                 {
@@ -142,7 +144,7 @@ namespace AudioVisualizer.AudioSpectrum
             finally
             {
                 extDrawer?.SetGain(VisualConfig.Gain);
-            }
+            }*/
 
         }
 
