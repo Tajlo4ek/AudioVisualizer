@@ -32,6 +32,8 @@ namespace AudioVisualizer.AudioSpectrum
         [JsonIgnore]
         public Pen MaxPen { get; private set; }
 
+        [JsonIgnore]
+        public Pen LowPen { get; private set; }
 
         [JsonProperty]
         public VisualStyle Style { get; private set; }
@@ -76,6 +78,7 @@ namespace AudioVisualizer.AudioSpectrum
             set
             {
                 LowBrush.Color = value;
+                LowPen.Color = value;
                 onEdit?.Invoke();
             }
         }
@@ -118,6 +121,7 @@ namespace AudioVisualizer.AudioSpectrum
             BackgroundBrush = new SolidBrush(Color.Empty);
 
             MaxPen = new Pen(Color.Empty);
+            LowPen = new Pen(Color.Empty);
         }
 
         public void AddOnEdit(Action onEdit)
