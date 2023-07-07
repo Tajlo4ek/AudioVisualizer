@@ -11,12 +11,14 @@ namespace AudioVisualizer.AudioSpectrum
         public int DataCount { get { return currentData.Length; } }
         public float TotalLoad { get; private set; }
 
-        const float moveDownSpeed = 0.75f;
+        public float MoveDownSpeed { get; set; }
+
 
         public Spectrum()
         {
             currentData = new float[0];
             maxData = new float[0];
+            MoveDownSpeed = 0.75f;
         }
 
         public void SetData(float[] values, float totalLoad)
@@ -29,7 +31,7 @@ namespace AudioVisualizer.AudioSpectrum
 
             for (int ind = 0; ind < values.Length; ind++)
             {
-                var next = maxData[ind] - moveDownSpeed;
+                var next = maxData[ind] - MoveDownSpeed;
                 maxData[ind] = next > 0 ? next : 0;
 
                 var cur = values[ind];

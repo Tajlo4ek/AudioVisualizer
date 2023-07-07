@@ -103,9 +103,10 @@ namespace AudioVisualizer.AudioSpectrum
             if (force || drawer == null || drawer.VisualStyle != VisualConfig.Style)
             {
                 drawer = DrawerFactory.GetDrawer(VisualConfig.Style);
-                drawer.SetDataConfig(DataConfig);                
+                drawer.SetDataConfig(DataConfig);
             }
             drawer.SetVisualConfig(VisualConfig);
+            timer.Interval = VisualConfig.UpdateMSec;
 
             OnResize();
         }

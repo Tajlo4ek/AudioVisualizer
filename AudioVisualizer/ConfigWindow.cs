@@ -33,13 +33,14 @@ namespace AudioVisualizer
                 nudColCount.ValueChanged += ConfigColumnNud_ValueChanged;
                 nudRectHeight.ValueChanged += ConfigRectNud_ValueChanged;
                 nudRectSpace.ValueChanged += ConfigRectNud_ValueChanged;
+                nudUpdateSpeed.ValueChanged += ConfigUpdateSpeed_ValueChanged;
 
                 cbVisual.SelectedValueChanged += CbVisual_SelectedValueChanged;
                 cbFftSize.SelectedValueChanged += CbFftSize_SelectedValueChanged;
 
                 tbGain.ValueChanged += TbGain_ValueChanged;
             }
-        }
+        }        
 
         private void ParseDataConfig()
         {
@@ -70,6 +71,7 @@ namespace AudioVisualizer
             nudColCount.Value = visualConfigurator.ColWidth;
             nudRectSpace.Value = visualConfigurator.RectSpace;
             nudRectHeight.Value = visualConfigurator.RectHeight;
+            nudUpdateSpeed.Value = visualConfigurator.UpdateMSec;
 
             foreach (var type in Enum.GetValues(typeof(AnalyzerVisualConfig.VisualStyle)))
             {
@@ -95,6 +97,11 @@ namespace AudioVisualizer
             cbComPorts.SelectedItem = extDrawerDataConfig.Url;
         }
 
+        private void ConfigUpdateSpeed_ValueChanged(object sender, EventArgs e)
+        {
+            visualConfigurator.SetUpdateSpeed((int)nudUpdateSpeed.Value);
+            SaveConfig();
+        }
 
         private void ConfigColumnNud_ValueChanged(object sender, EventArgs e)
         {
@@ -132,16 +139,6 @@ namespace AudioVisualizer
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 visualConfigurator.LowLevelColor = colorDialog.Color;
-                SaveConfig();
-            }
-        }
-
-        private void BtnColorMax_Click(object sender, EventArgs e)
-        {
-            colorDialog.Color = visualConfigurator.MaxLevelColor;
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                visualConfigurator.MaxLevelColor = colorDialog.Color;
                 SaveConfig();
             }
         }

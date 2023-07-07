@@ -35,8 +35,6 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
             int needCount = (int)(Math.PI * radiusIn / 180 * (180 - offsetAngle) / (visualConfig.ColWidth + visualConfig.ColSpace));
             Analyzer.TestCountLine(needCount, dataConfig.FftDataSize, out int realCountLine, out startAt, out finishAt);
             LineCount = realCountLine;
-
-            Console.WriteLine(needCount);
         }
 
         public override void CreateCurrentImage(Spectrum leftSpectrum, Spectrum rightSpectrum)
@@ -108,7 +106,13 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
 
                 param.nowAngle += param.dAlpha;
 
-                mainGraphics.FillPolygon(visualConfig.MaxBrush, poly);
+                PointF start = new Point();
+                PointF finish = new Point();
+                GetPointOnCircle(param.nowAngle, radiusIn - 5, ref start);
+                GetPointOnCircle(param.nowAngle, radiusOut + 5, ref finish);
+                var brush = new LinearGradientBrush(start, finish, visualConfig.LowLevelColor, visualConfig.HighLevelColor);
+
+                mainGraphics.FillPolygon(brush, poly);
             }
         }
 

@@ -17,10 +17,11 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
         private RectangleF[] gridRects;
         private LinearGradientBrush backgroundBrush;
 
-        private void UpdateBackBrush() {
+        private void UpdateBackBrush()
+        {
             backgroundBrush = new LinearGradientBrush(
                new PointF(0, CurrentImage.Height),
-               new PointF(0, CurrentImage.Height * (1 - pbPart)),
+               new PointF(0, CurrentImage.Height * (1 - pbPart) - 5),
                visualConfig.LowLevelColor,
                visualConfig.HighLevelColor);
         }
@@ -100,7 +101,7 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
 
             float scaleX = CurrentImage.Width / 2 * pbPart / 100;
 
-            mainGraphics.FillRectangle(
+            /*mainGraphics.FillRectangle(
                 visualConfig.MaxBrush,
                 CurrentImage.Width / 2 - (float)Math.Round(leftSpectrum.TotalLoad * scaleX) - 4,
                 1,
@@ -112,7 +113,7 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
                 CurrentImage.Width / 2 + 4,
                 1,
                 (float)Math.Round(rightSpectrum.TotalLoad * scaleX),
-                10);
+                10);*/
 
 
             DrawSpectrumMax(leftMax, leftRectCount, 0);
@@ -143,14 +144,14 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
 
                 maxRects[spectrumInd] = new RectangleF(
                     spectrumInd * (visualConfig.ColWidth + visualConfig.ColSpace) + offset,
-                    CurrentImage.Height - maxLen - visualConfig.RectHeight,
+                    CurrentImage.Height - maxLen,
                     visualConfig.ColWidth,
                     visualConfig.RectHeight);
             }
 
             if (maxRects.Length != 0)
             {
-                mainGraphics.FillRectangles(visualConfig.MaxBrush, maxRects);
+                mainGraphics.FillRectangles(backgroundBrush, maxRects);
             }
         }
 

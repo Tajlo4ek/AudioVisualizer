@@ -39,7 +39,6 @@
             this.nudColCount = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.btnColorL = new System.Windows.Forms.Button();
-            this.btnColorMax = new System.Windows.Forms.Button();
             this.btnColorH = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -57,6 +56,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.cbExtDrawerType = new System.Windows.Forms.ComboBox();
             this.btnExtDrawerSet = new System.Windows.Forms.Button();
+            this.nudUpdateSpeed = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudRectHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRectSpace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudColSpace)).BeginInit();
@@ -65,6 +66,7 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbGain)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudUpdateSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStartStop
@@ -210,16 +212,6 @@
             this.btnColorL.UseVisualStyleBackColor = true;
             this.btnColorL.Click += new System.EventHandler(this.BtnColorL_Click);
             // 
-            // btnColorMax
-            // 
-            this.btnColorMax.Location = new System.Drawing.Point(87, 48);
-            this.btnColorMax.Name = "btnColorMax";
-            this.btnColorMax.Size = new System.Drawing.Size(75, 23);
-            this.btnColorMax.TabIndex = 13;
-            this.btnColorMax.Text = "Max";
-            this.btnColorMax.UseVisualStyleBackColor = true;
-            this.btnColorMax.Click += new System.EventHandler(this.BtnColorMax_Click);
-            // 
             // btnColorH
             // 
             this.btnColorH.Location = new System.Drawing.Point(87, 19);
@@ -234,7 +226,6 @@
             // 
             this.groupBox1.Controls.Add(this.btnColorBack);
             this.groupBox1.Controls.Add(this.btnColorH);
-            this.groupBox1.Controls.Add(this.btnColorMax);
             this.groupBox1.Controls.Add(this.btnColorL);
             this.groupBox1.Location = new System.Drawing.Point(218, 51);
             this.groupBox1.Name = "groupBox1";
@@ -390,11 +381,39 @@
             this.btnExtDrawerSet.UseVisualStyleBackColor = true;
             this.btnExtDrawerSet.Click += new System.EventHandler(this.BtnExtDrawerSet_Click);
             // 
+            // nudUpdateSpeed
+            // 
+            this.nudUpdateSpeed.Location = new System.Drawing.Point(295, 136);
+            this.nudUpdateSpeed.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudUpdateSpeed.Name = "nudUpdateSpeed";
+            this.nudUpdateSpeed.Size = new System.Drawing.Size(59, 20);
+            this.nudUpdateSpeed.TabIndex = 10;
+            this.nudUpdateSpeed.Value = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(221, 138);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(68, 13);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "update msec";
+            // 
             // ConfigWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(631, 215);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.nudUpdateSpeed);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tbGain);
@@ -419,6 +438,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbGain)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudUpdateSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -437,7 +457,6 @@
         private System.Windows.Forms.NumericUpDown nudColCount;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnColorL;
-        private System.Windows.Forms.Button btnColorMax;
         private System.Windows.Forms.Button btnColorH;
         private System.Windows.Forms.ColorDialog colorDialog;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -455,5 +474,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnExtDrawerStop;
         private System.Windows.Forms.ComboBox cbComPorts;
+        private System.Windows.Forms.NumericUpDown nudUpdateSpeed;
+        private System.Windows.Forms.Label label9;
     }
 }

@@ -24,13 +24,7 @@ namespace AudioVisualizer.AudioSpectrum
         public SolidBrush HighBrush { get; private set; }
 
         [JsonIgnore]
-        public SolidBrush MaxBrush { get; private set; }
-
-        [JsonIgnore]
         public SolidBrush BackgroundBrush { get; private set; }
-
-        [JsonIgnore]
-        public Pen MaxPen { get; private set; }
 
         [JsonIgnore]
         public Pen LowPen { get; private set; }
@@ -43,6 +37,7 @@ namespace AudioVisualizer.AudioSpectrum
 
         [JsonProperty]
         public int ColWidth { get; private set; }
+
 
         [JsonProperty]
         public int RectHeight { get; private set; }
@@ -98,30 +93,17 @@ namespace AudioVisualizer.AudioSpectrum
         }
 
         [JsonProperty]
-        public Color MaxLevelColor
-        {
-            get
-            {
-                return MaxBrush.Color;
-            }
-            set
-            {
-                MaxBrush.Color = value;
-                MaxPen.Color = value;
-                onEdit?.Invoke();
-            }
-        }
-
+        public int UpdateMSec { get; private set; }
 
         public AnalyzerVisualConfig()
         {
             LowBrush = new SolidBrush(Color.Empty);
             HighBrush = new SolidBrush(Color.Empty);
-            MaxBrush = new SolidBrush(Color.Empty);
             BackgroundBrush = new SolidBrush(Color.Empty);
 
-            MaxPen = new Pen(Color.Empty);
             LowPen = new Pen(Color.Empty);
+
+            LoadDefault();
         }
 
         public void AddOnEdit(Action onEdit)
@@ -136,8 +118,8 @@ namespace AudioVisualizer.AudioSpectrum
 
             LowLevelColor = Color.Green;
             HighLevelColor = Color.Red;
-            MaxLevelColor = Color.FromArgb(255, 0, 255, 255);
             Gain = 1;
+            UpdateMSec = 25;
 
             BackgroundColor = Color.Black;
 
@@ -163,6 +145,12 @@ namespace AudioVisualizer.AudioSpectrum
         public void SetStyle(VisualStyle style)
         {
             Style = style;
+            onEdit?.Invoke();
+        }
+
+        public void SetUpdateSpeed(int val)
+        {
+            UpdateMSec = val > 0 ? val : 10;
             onEdit?.Invoke();
         }
 
