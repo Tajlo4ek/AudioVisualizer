@@ -18,7 +18,9 @@ namespace AudioVisualizer
             analyzerView = new AnalyzerView(pbMain);
             configWindow = new ConfigWindow(analyzerView);
 
-            
+            ShowInTaskbar = false;
+            notifyIconMin.Visible = true;
+
             //Common.WindowUtils.ShowBehindDesktop(this.Handle);
             //this.Location = new System.Drawing.Point(0, 0);
             //FormBorderStyle = FormBorderStyle.None;
@@ -29,8 +31,6 @@ namespace AudioVisualizer
         {
             if (WindowState == FormWindowState.Minimized)
             {
-                ShowInTaskbar = false;
-                notifyIconMin.Visible = true;
                 return;
             }
 
@@ -40,11 +40,12 @@ namespace AudioVisualizer
             Saver.Save(Saver.DataType.WindowSize, json);
         }
 
-        private void NotifyIconMin_Click(object sender, EventArgs e)
+        private void NotifyIconMin_MouseClick(object sender, MouseEventArgs e)
         {
-            ShowInTaskbar = true;
-            notifyIconMin.Visible = false;
-            WindowState = FormWindowState.Normal;
+            if (e.Button == MouseButtons.Left)
+            {
+                WindowState = FormWindowState.Normal;
+            }
         }
 
         private void MiOverAll_Click(object sender, EventArgs e)
@@ -60,7 +61,6 @@ namespace AudioVisualizer
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-
             try
             {
                 var json = Saver.Load(Saver.DataType.WindowSize);

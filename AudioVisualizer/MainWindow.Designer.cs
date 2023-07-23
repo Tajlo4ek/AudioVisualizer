@@ -75,9 +75,10 @@
             this.notifyIconMin.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.notifyIconMin.BalloonTipText = "asdsa";
             this.notifyIconMin.BalloonTipTitle = "asfasf";
+            this.notifyIconMin.ContextMenuStrip = this.cmsMain;
             this.notifyIconMin.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIconMin.Icon")));
             this.notifyIconMin.Text = "Visualizer";
-            this.notifyIconMin.Click += new System.EventHandler(this.NotifyIconMin_Click);
+            this.notifyIconMin.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIconMin_MouseClick);
             // 
             // MainWindow
             // 
@@ -86,6 +87,7 @@
             this.ClientSize = new System.Drawing.Size(617, 376);
             this.ContextMenuStrip = this.cmsMain;
             this.Controls.Add(this.pbMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(350, 150);
             this.Name = "MainWindow";
             this.Text = "Visualizer";
