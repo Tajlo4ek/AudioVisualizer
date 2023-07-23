@@ -106,17 +106,13 @@ namespace Common
             try
             {
                 var ptr = FindWindow("Shell_TrayWnd", null);
-                Console.WriteLine("INIT PTR: {0}", ptr.ToInt32());
                 PostMessage(ptr, WM_USER + 436, (IntPtr)0, (IntPtr)0);
 
                 do
                 {
                     ptr = FindWindow("Shell_TrayWnd", null);
-                    Console.WriteLine("PTR: {0}", ptr.ToInt32());
-
                     if (ptr.ToInt32() == 0)
                     {
-                        Console.WriteLine("Success. Breaking out of loop.");
                         break;
                     }
 
@@ -127,14 +123,11 @@ namespace Common
             {
                 Console.WriteLine("{0} {1}", ex.Message, ex.StackTrace);
             }
-            Console.WriteLine("Restarting the shell.");
             string explorer = string.Format("{0}\\{1}", Environment.GetEnvironmentVariable("WINDIR"), "explorer.exe");
             Process process = new Process();
             process.StartInfo.FileName = explorer;
             process.StartInfo.UseShellExecute = true;
             process.Start();
-
-            Console.ReadLine();
         }
     }
 }
