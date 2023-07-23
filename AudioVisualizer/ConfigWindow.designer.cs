@@ -50,13 +50,6 @@
             this.cbVisual = new System.Windows.Forms.ComboBox();
             this.tbGain = new System.Windows.Forms.TrackBar();
             this.label6 = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.cbComPorts = new System.Windows.Forms.ComboBox();
-            this.btnExtDrawerStop = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cbExtDrawerType = new System.Windows.Forms.ComboBox();
-            this.btnExtDrawerSet = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudRectHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRectSpace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudColSpace)).BeginInit();
@@ -64,7 +57,6 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbGain)).BeginInit();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnStartStop
@@ -307,84 +299,11 @@
             this.label6.TabIndex = 21;
             this.label6.Text = "Gain";
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.cbComPorts);
-            this.groupBox3.Controls.Add(this.btnExtDrawerStop);
-            this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.cbExtDrawerType);
-            this.groupBox3.Controls.Add(this.btnExtDrawerSet);
-            this.groupBox3.Enabled = false;
-            this.groupBox3.Location = new System.Drawing.Point(398, 51);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(174, 131);
-            this.groupBox3.TabIndex = 16;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "External Drawer";
-            // 
-            // cbComPorts
-            // 
-            this.cbComPorts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbComPorts.FormattingEnabled = true;
-            this.cbComPorts.Location = new System.Drawing.Point(39, 48);
-            this.cbComPorts.Name = "cbComPorts";
-            this.cbComPorts.Size = new System.Drawing.Size(100, 21);
-            this.cbComPorts.TabIndex = 28;
-            // 
-            // btnExtDrawerStop
-            // 
-            this.btnExtDrawerStop.Location = new System.Drawing.Point(6, 102);
-            this.btnExtDrawerStop.Name = "btnExtDrawerStop";
-            this.btnExtDrawerStop.Size = new System.Drawing.Size(75, 23);
-            this.btnExtDrawerStop.TabIndex = 27;
-            this.btnExtDrawerStop.Text = "stop";
-            this.btnExtDrawerStop.UseVisualStyleBackColor = true;
-            this.btnExtDrawerStop.Click += new System.EventHandler(this.BtnExtDrawerStop_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 22);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(27, 13);
-            this.label8.TabIndex = 26;
-            this.label8.Text = "type";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 50);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(26, 13);
-            this.label7.TabIndex = 23;
-            this.label7.Text = "Port";
-            // 
-            // cbExtDrawerType
-            // 
-            this.cbExtDrawerType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbExtDrawerType.FormattingEnabled = true;
-            this.cbExtDrawerType.Location = new System.Drawing.Point(39, 19);
-            this.cbExtDrawerType.Name = "cbExtDrawerType";
-            this.cbExtDrawerType.Size = new System.Drawing.Size(100, 21);
-            this.cbExtDrawerType.TabIndex = 22;
-            // 
-            // btnExtDrawerSet
-            // 
-            this.btnExtDrawerSet.Location = new System.Drawing.Point(93, 102);
-            this.btnExtDrawerSet.Name = "btnExtDrawerSet";
-            this.btnExtDrawerSet.Size = new System.Drawing.Size(75, 23);
-            this.btnExtDrawerSet.TabIndex = 0;
-            this.btnExtDrawerSet.Text = "Set";
-            this.btnExtDrawerSet.UseVisualStyleBackColor = true;
-            this.btnExtDrawerSet.Click += new System.EventHandler(this.BtnExtDrawerSet_Click);
-            // 
             // ConfigWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(631, 215);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tbGain);
             this.Controls.Add(this.cbVisual);
@@ -407,8 +326,6 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbGain)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -437,12 +354,5 @@
         private System.Windows.Forms.ComboBox cbVisual;
         private System.Windows.Forms.TrackBar tbGain;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ComboBox cbExtDrawerType;
-        private System.Windows.Forms.Button btnExtDrawerSet;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button btnExtDrawerStop;
-        private System.Windows.Forms.ComboBox cbComPorts;
     }
 }

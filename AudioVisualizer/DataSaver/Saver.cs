@@ -15,7 +15,6 @@ namespace AudioVisualizer.DataSaver
             VisualConfig,
             DataConfig,
             WindowSize,
-            ExtConfig,
         }
 
         private static readonly Dictionary<DataType, string> saveFileName = new Dictionary<DataType, string>
@@ -23,7 +22,6 @@ namespace AudioVisualizer.DataSaver
             {DataType.DataConfig, "config.json" },
             {DataType.VisualConfig, "visual.json" },
             {DataType.WindowSize, "size.json" },
-            {DataType.ExtConfig, "ext.json" },
         };
 
         static readonly string saveFolder = Application.StartupPath + "\\saves\\";

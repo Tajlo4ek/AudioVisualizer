@@ -79,9 +79,6 @@
       <DependentUpon>ConfigWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="DataSaver\Saver.cs" />
-    <Compile Include="ExtDrawer\ComExtDrawer.cs" />
-    <Compile Include="ExtDrawer\ExtBaseDrawer.cs" />
-    <Compile Include="ExtDrawer\ExtDrawerDataConfig.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

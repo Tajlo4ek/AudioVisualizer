@@ -1,7 +1,6 @@
 ﻿using AudioVisualizer.AudioSpectrum;
 using System;
 using System.Windows.Forms;
-using AudioVisualizer.ExtDrawer;
 
 namespace AudioVisualizer
 {
@@ -10,7 +9,6 @@ namespace AudioVisualizer
         private readonly AnalyzerView analyzerView;
         private AnalyzerVisualConfig visualConfigurator;
         private AnalyzerDataConfig dataConfigurator;
-        private ExtDrawerDataConfig extDrawerDataConfig;
 
         public ConfigWindow() : this(null)
         {
@@ -25,7 +23,6 @@ namespace AudioVisualizer
                 this.analyzerView = analyzerView;
                 this.visualConfigurator = analyzerView.VisualConfig;
                 this.dataConfigurator = analyzerView.DataConfig;
-                this.extDrawerDataConfig = analyzerView.ExtConfig;
 
                 LoadConfig();
 
@@ -78,21 +75,6 @@ namespace AudioVisualizer
             cbVisual.SelectedItem = visualConfigurator.Style.ToString();
 
             tbGain.Value = (int)(visualConfigurator.Gain * 10);
-        }
-
-        private void ParseExtDrawerData()
-        {
-            foreach (var type in Enum.GetValues(typeof(ExtDrawerDataConfig.ExtDrawerType)))
-            {
-                cbExtDrawerType.Items.Add(type.ToString());
-            }
-            cbExtDrawerType.SelectedItem = extDrawerDataConfig.Type.ToString();
-
-            foreach (var port in ComExtDrawer.GetPorts())
-            {
-                cbComPorts.Items.Add(port);
-            }
-            cbComPorts.SelectedItem = extDrawerDataConfig.Url;
         }
 
         private void ConfigColumnNud_ValueChanged(object sender, EventArgs e)
@@ -172,7 +154,6 @@ namespace AudioVisualizer
         {
             DataSaver.Saver.Save(DataSaver.Saver.DataType.VisualConfig, visualConfigurator.GetSaveJson());
             DataSaver.Saver.Save(DataSaver.Saver.DataType.DataConfig, dataConfigurator.GetSaveJson());
-            DataSaver.Saver.Save(DataSaver.Saver.DataType.ExtConfig, extDrawerDataConfig.GetSaveJson());
         }
 
         private void LoadConfig()
@@ -189,12 +170,6 @@ namespace AudioVisualizer
             dataConfigurator = analyzerView.DataConfig;
             ParseDataConfig();
 
-            json = DataSaver.Saver.Load(DataSaver.Saver.DataType.ExtConfig);
-            var configExt = ExtDrawerDataConfig.Parse(json);
-            analyzerView.SetExtDataConfig(configExt);
-            extDrawerDataConfig = analyzerView.ExtConfig;
-            ParseExtDrawerData();
-
             analyzerView.SetVisualConfig(visualConfigurator);
             analyzerView.SetDataConfig(dataConfigurator);
         }
@@ -203,19 +178,6 @@ namespace AudioVisualizer
         {
             visualConfigurator.SetGain((float)tbGain.Value / 10);
             SaveConfig();
-        }
-
-        private void BtnExtDrawerSet_Click(object sender, EventArgs e)
-        {
-            var type = (ExtDrawerDataConfig.ExtDrawerType)Enum.Parse(typeof(ExtDrawerDataConfig.ExtDrawerType), cbExtDrawerType.SelectedItem.ToString());
-            extDrawerDataConfig.SetData(cbComPorts.SelectedItem.ToString(), type);
-            SaveConfig();
-        }
-
-        private void BtnExtDrawerStop_Click(object sender, EventArgs e)
-        {
-            cbExtDrawerType.SelectedItem = ExtDrawerDataConfig.ExtDrawerType.None.ToString();
-            BtnExtDrawerSet_Click(null, null);
         }
     }
 }

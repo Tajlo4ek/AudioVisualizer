@@ -15,6 +15,8 @@ namespace AudioVisualizer
         private readonly AnalyzerView analyzerView;
         private readonly ConfigWindow configWindow;
 
+        private bool isBackDesktop = true;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -24,6 +26,7 @@ namespace AudioVisualizer
             ShowInTaskbar = false;
             notifyIconMin.Visible = true;
 
+            isBackDesktop = false;
             //Common.WindowUtils.ShowBehindDesktop(this.Handle);
             //this.Location = new System.Drawing.Point(0, 0);
             //FormBorderStyle = FormBorderStyle.None;
@@ -81,7 +84,10 @@ namespace AudioVisualizer
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            WindowUtils.RestartExplorer();
+            if (isBackDesktop)
+            {
+                WindowUtils.RestartExplorer();
+            }
         }
 
         private void MiExit_Click(object sender, EventArgs e)

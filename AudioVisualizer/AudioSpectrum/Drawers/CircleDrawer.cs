@@ -64,7 +64,6 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
 
             DrawMaxSpectrum(leftMax, leftBlockCount, false);
             DrawMaxSpectrum(rightMax, rightBlockCount, true);
-
         }
 
 

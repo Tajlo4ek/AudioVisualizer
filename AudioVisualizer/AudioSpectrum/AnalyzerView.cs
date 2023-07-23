@@ -1,7 +1,6 @@
 ﻿using AudioVisualizer.AudioSpectrum.Drawers;
 using System;
 using System.Windows.Forms;
-using AudioVisualizer.ExtDrawer;
 
 namespace AudioVisualizer.AudioSpectrum
 {
@@ -15,13 +14,10 @@ namespace AudioVisualizer.AudioSpectrum
         private readonly System.Windows.Forms.Timer timer;
 
         private BaseDrawer drawer;
-        private ExtBaseDrawer extDrawer;
 
         public AnalyzerVisualConfig VisualConfig { get; private set; }
 
         public AnalyzerDataConfig DataConfig { get; private set; }
-
-        public ExtDrawerDataConfig ExtConfig { get; private set; }
 
         public AnalyzerView(PictureBox pictureBox)
         {
@@ -42,10 +38,6 @@ namespace AudioVisualizer.AudioSpectrum
             DataConfig = new AnalyzerDataConfig();
             DataConfig.LoadDefault();
             DataConfig.AddOnEdit(OnDataEdit);
-
-            ExtConfig = new ExtDrawerDataConfig();
-            ExtConfig.LoadDefault();
-            ExtConfig.AddOnEdit(OnExtEdit);
 
             OnVisualEdit();
             OnDataEdit();
@@ -86,16 +78,6 @@ namespace AudioVisualizer.AudioSpectrum
 
         }
 
-        public void SetExtDataConfig(ExtDrawerDataConfig config)
-        {
-
-            this.ExtConfig = config;
-            config.AddOnEdit(OnExtEdit);
-            OnExtEdit();
-
-        }
-
-
         public void OnResize()
         {
 
@@ -106,8 +88,6 @@ namespace AudioVisualizer.AudioSpectrum
 
         private void OnVisualEdit(bool force)
         {
-            extDrawer?.SetGain(VisualConfig.Gain);
-
             if (force || drawer == null || drawer.VisualStyle != VisualConfig.Style)
             {
                 drawer = DrawerFactory.GetDrawer(VisualConfig.Style);
@@ -130,30 +110,6 @@ namespace AudioVisualizer.AudioSpectrum
                 Analyzer.Start(DataConfig.ActiveDeviceName);
             }
             OnResize();
-        }
-
-        private void OnExtEdit()
-        {
-
-            extDrawer?.Dispose();
-            return;
-            /*try
-            {
-                switch (ExtConfig.Type)
-                {
-                    case ExtDrawerDataConfig.ExtDrawerType.COM:
-                        extDrawer = new ComExtDrawer(ExtConfig.Url);
-                        break;
-                    case ExtDrawerDataConfig.ExtDrawerType.None:
-                        extDrawer = null;
-                        break;
-                }
-            }
-            finally
-            {
-                extDrawer?.SetGain(VisualConfig.Gain);
-            }*/
-
         }
 
     }
