@@ -92,9 +92,6 @@ namespace AudioVisualizer.AudioSpectrum
             }
         }
 
-        [JsonProperty]
-        public int UpdateMSec { get; private set; }
-
         public AnalyzerVisualConfig()
         {
             LowBrush = new SolidBrush(Color.Empty);
@@ -119,7 +116,6 @@ namespace AudioVisualizer.AudioSpectrum
             LowLevelColor = Color.Green;
             HighLevelColor = Color.Red;
             Gain = 1;
-            UpdateMSec = 25;
 
             BackgroundColor = Color.Black;
 
@@ -145,12 +141,6 @@ namespace AudioVisualizer.AudioSpectrum
         public void SetStyle(VisualStyle style)
         {
             Style = style;
-            onEdit?.Invoke();
-        }
-
-        public void SetUpdateSpeed(int val)
-        {
-            UpdateMSec = val > 0 ? val : 10;
             onEdit?.Invoke();
         }
 

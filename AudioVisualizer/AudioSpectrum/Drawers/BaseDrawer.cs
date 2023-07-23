@@ -24,6 +24,7 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
 
         public virtual void SetSize(Size size)
         {
+
             if (size.Width > 0 && size.Height > 0)
             {
                 CurrentImage = new Bitmap(size.Width, size.Height);
@@ -35,6 +36,7 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
 
             mainGraphics = Graphics.FromImage(CurrentImage);
             mainGraphics.Clear(visualConfig.BackgroundColor);
+
         }
 
         public abstract void CreateCurrentImage(Spectrum leftSpectrum, Spectrum rightSpectrum);

@@ -12,7 +12,7 @@ namespace AudioVisualizer.AudioSpectrum
 
         private const int DeviceFreq = 44100;
 
-        private const int minFreq = 40;
+        private const int minFreq = 20;
         private const int maxFreq = 20000;
 
         public static bool IsInit { get; private set; } = false;
@@ -75,7 +75,7 @@ namespace AudioVisualizer.AudioSpectrum
                     }
                 }
                 else
-                {                    
+                {
                     IsInit = false;
                     return false;
                 }
@@ -195,6 +195,7 @@ namespace AudioVisualizer.AudioSpectrum
             return length;
         }
 
+
         private static void TestCountLine(int lineCount, FftConfig fftConfig, out int indMin, out int indMax)
         {
             float lineFreq = (float)DeviceFreq / fftConfig.DataSize;
@@ -249,6 +250,40 @@ namespace AudioVisualizer.AudioSpectrum
                 realCount++;
                 TestCountLine(realCount, fftConfig, out indMin, out indMax);
             }
+        }
+
+
+        public static int GetIndexFreq(int lineCount, FftConfig.FftDataSizes dataSize, int needFreq)
+        {
+            var fftConfig = FftConfig.GetConfig(dataSize);
+            float lineFreq = (float)DeviceFreq / fftConfig.DataSize;
+
+            var b0 = 0;
+
+            for (int x = 0; x < lineCount; x++)
+            {
+                var b1 = (int)Math.Round(Math.Pow(2, (float)x * fftConfig.DataPow2 / (lineCount - 1)));
+
+                if (b1 > fftConfig.DataSize - 1)
+                {
+                    b1 = fftConfig.DataSize - 1;
+                }
+                if (b1 <= b0)
+                {
+                    b1 = b0 + 1;
+                }
+
+                for (; b0 < b1; b0++)
+                {
+                }
+
+                if (b1 * lineFreq > needFreq)
+                {
+                    return x > 0 ? x - 1 : 0;
+                }
+            }
+
+            return lineCount - 1;
         }
 
 

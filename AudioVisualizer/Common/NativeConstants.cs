@@ -11,5 +11,6 @@
         public const int SWP_NOACTIVATE = 0x10;
         public const int SWP_NOZORDER = 4;
         public const int WM_WINDOWPOSCHANGING = 0x46;
+        public const int WM_USER = 0x0400;
     }
 }

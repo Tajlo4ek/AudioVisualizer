@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 using static Common.NativeConstants;
 using static Common.NativeMethods;
 
@@ -9,8 +11,6 @@ namespace Common
     static class WindowUtils
     {
         public static void ShowBehindDesktop(IntPtr handle) {
-            //var hwndSource = HwndSource.FromHwnd(handle);
-            //hwndSource.AddHook(WindowProc);
             SetStyles(handle);
             EnableNoActive(handle, true);
             if (Environment.OSVersion.Version.Major < 6 || (Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor < 2))
@@ -21,19 +21,7 @@ namespace Common
             {
                 ShowAlwaysBehindDesktop(handle);
             }
-        }
-
-        private static IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            if (msg == NativeConstants.WM_WINDOWPOSCHANGING)
-            {
-                var windowPos = (WindowPos)Marshal.PtrToStructure(lParam, typeof(WindowPos));
-                windowPos.hwndInsertAfter = new IntPtr(NativeConstants.HWND_BOTTOM);
-                windowPos.flags &= ~(uint)NativeConstants.SWP_NOZORDER;
-                handled = true;
-            }
-            return IntPtr.Zero;
-        }
+        }        
 
         private static void ShowAlwaysBehindDesktopBeforeWindows8(IntPtr hwnd)
         {
@@ -111,6 +99,42 @@ namespace Common
                 exStyle &= ~WS_EX_NOACTIVATE;
             }
             SetWindowLong(hwnd, GWL_EXSTYLE, exStyle);
+        }
+
+        public static void RestartExplorer()
+        {
+            try
+            {
+                var ptr = FindWindow("Shell_TrayWnd", null);
+                Console.WriteLine("INIT PTR: {0}", ptr.ToInt32());
+                PostMessage(ptr, WM_USER + 436, (IntPtr)0, (IntPtr)0);
+
+                do
+                {
+                    ptr = FindWindow("Shell_TrayWnd", null);
+                    Console.WriteLine("PTR: {0}", ptr.ToInt32());
+
+                    if (ptr.ToInt32() == 0)
+                    {
+                        Console.WriteLine("Success. Breaking out of loop.");
+                        break;
+                    }
+
+                    Thread.Sleep(1000);
+                } while (true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} {1}", ex.Message, ex.StackTrace);
+            }
+            Console.WriteLine("Restarting the shell.");
+            string explorer = string.Format("{0}\\{1}", Environment.GetEnvironmentVariable("WINDIR"), "explorer.exe");
+            Process process = new Process();
+            process.StartInfo.FileName = explorer;
+            process.StartInfo.UseShellExecute = true;
+            process.Start();
+
+            Console.ReadLine();
         }
     }
 }

@@ -97,24 +97,8 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
 
             var leftRectCount = DrawSpectrum(left, 0);
             var rightRectCount = DrawSpectrum(right, rightOffset);
+
             DrawGrid();
-
-            float scaleX = CurrentImage.Width / 2 * pbPart / 100;
-
-            /*mainGraphics.FillRectangle(
-                visualConfig.MaxBrush,
-                CurrentImage.Width / 2 - (float)Math.Round(leftSpectrum.TotalLoad * scaleX) - 4,
-                1,
-                (float)Math.Round(leftSpectrum.TotalLoad * scaleX),
-                10);
-
-            mainGraphics.FillRectangle(
-                visualConfig.MaxBrush,
-                CurrentImage.Width / 2 + 4,
-                1,
-                (float)Math.Round(rightSpectrum.TotalLoad * scaleX),
-                10);*/
-
 
             DrawSpectrumMax(leftMax, leftRectCount, 0);
             DrawSpectrumMax(rightMax, rightRectCount, rightOffset);

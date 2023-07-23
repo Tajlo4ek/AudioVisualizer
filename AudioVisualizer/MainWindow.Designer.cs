@@ -35,6 +35,7 @@
             this.miOverAll = new System.Windows.Forms.ToolStripMenuItem();
             this.miOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIconMin = new System.Windows.Forms.NotifyIcon(this.components);
+            this.miExit = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.cmsMain.SuspendLayout();
             this.SuspendLayout();
@@ -52,21 +53,22 @@
             // 
             this.cmsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miOverAll,
-            this.miOptions});
+            this.miOptions,
+            this.miExit});
             this.cmsMain.Name = "cmsMain";
-            this.cmsMain.Size = new System.Drawing.Size(173, 48);
+            this.cmsMain.Size = new System.Drawing.Size(181, 92);
             // 
             // miOverAll
             // 
             this.miOverAll.Name = "miOverAll";
-            this.miOverAll.Size = new System.Drawing.Size(172, 22);
+            this.miOverAll.Size = new System.Drawing.Size(180, 22);
             this.miOverAll.Text = "Поверх всех окон";
             this.miOverAll.Click += new System.EventHandler(this.MiOverAll_Click);
             // 
             // miOptions
             // 
             this.miOptions.Name = "miOptions";
-            this.miOptions.Size = new System.Drawing.Size(172, 22);
+            this.miOptions.Size = new System.Drawing.Size(180, 22);
             this.miOptions.Text = "Настройки";
             this.miOptions.Click += new System.EventHandler(this.MiOptions_Click);
             // 
@@ -80,6 +82,13 @@
             this.notifyIconMin.Text = "Visualizer";
             this.notifyIconMin.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIconMin_MouseClick);
             // 
+            // miExit
+            // 
+            this.miExit.Name = "miExit";
+            this.miExit.Size = new System.Drawing.Size(180, 22);
+            this.miExit.Text = "Выход";
+            this.miExit.Click += new System.EventHandler(this.MiExit_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -91,6 +100,7 @@
             this.MinimumSize = new System.Drawing.Size(350, 150);
             this.Name = "MainWindow";
             this.Text = "Visualizer";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
@@ -105,6 +115,7 @@
         private System.Windows.Forms.ToolStripMenuItem miOverAll;
         private System.Windows.Forms.ToolStripMenuItem miOptions;
         private System.Windows.Forms.NotifyIcon notifyIconMin;
+        private System.Windows.Forms.ToolStripMenuItem miExit;
     }
 }
 

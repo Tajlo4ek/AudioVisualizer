@@ -57,8 +57,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.cbExtDrawerType = new System.Windows.Forms.ComboBox();
             this.btnExtDrawerSet = new System.Windows.Forms.Button();
-            this.nudUpdateSpeed = new System.Windows.Forms.NumericUpDown();
-            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudRectHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRectSpace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudColSpace)).BeginInit();
@@ -67,7 +65,6 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbGain)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudUpdateSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStartStop
@@ -382,39 +379,11 @@
             this.btnExtDrawerSet.UseVisualStyleBackColor = true;
             this.btnExtDrawerSet.Click += new System.EventHandler(this.BtnExtDrawerSet_Click);
             // 
-            // nudUpdateSpeed
-            // 
-            this.nudUpdateSpeed.Location = new System.Drawing.Point(295, 136);
-            this.nudUpdateSpeed.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudUpdateSpeed.Name = "nudUpdateSpeed";
-            this.nudUpdateSpeed.Size = new System.Drawing.Size(59, 20);
-            this.nudUpdateSpeed.TabIndex = 10;
-            this.nudUpdateSpeed.Value = new decimal(new int[] {
-            25,
-            0,
-            0,
-            0});
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(221, 138);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(68, 13);
-            this.label9.TabIndex = 10;
-            this.label9.Text = "update msec";
-            // 
             // ConfigWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(631, 215);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.nudUpdateSpeed);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tbGain);
@@ -440,7 +409,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbGain)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudUpdateSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -476,7 +444,5 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnExtDrawerStop;
         private System.Windows.Forms.ComboBox cbComPorts;
-        private System.Windows.Forms.NumericUpDown nudUpdateSpeed;
-        private System.Windows.Forms.Label label9;
     }
 }

@@ -12,7 +12,7 @@ namespace AudioVisualizer.AudioSpectrum
         private Spectrum leftSpectrum;
         private Spectrum rightSpectrum;
 
-        private readonly Timer timer;
+        private readonly System.Windows.Forms.Timer timer;
 
         private BaseDrawer drawer;
         private ExtBaseDrawer extDrawer;
@@ -27,9 +27,9 @@ namespace AudioVisualizer.AudioSpectrum
         {
             mainPictureBox = pictureBox;
 
-            timer = new Timer();
+            timer = new System.Windows.Forms.Timer();
             timer.Tick += Timer_tick;
-            timer.Interval = 25;
+            timer.Interval = 10;
             timer.Stop();
 
             leftSpectrum = new Spectrum();
@@ -53,6 +53,7 @@ namespace AudioVisualizer.AudioSpectrum
             timer.Start();
         }
 
+
         private void Timer_tick(object sender, EventArgs e)
         {
             if (!Analyzer.IsInit)
@@ -61,39 +62,46 @@ namespace AudioVisualizer.AudioSpectrum
             }
 
             Analyzer.GetSpectrum(drawer.LineCount, VisualConfig.Gain, FftConfig.GetConfig(DataConfig.FftDataSize), ref leftSpectrum, ref rightSpectrum);
-
             drawer.CreateCurrentImage(leftSpectrum, rightSpectrum);
             mainPictureBox.Image = drawer.CurrentImage;
         }
 
         public void SetVisualConfig(AnalyzerVisualConfig config)
         {
+
             this.VisualConfig = config;
             config.AddOnEdit(OnVisualEdit);
             drawer.SetVisualConfig(config);
             OnVisualEdit(true);
+
         }
 
         public void SetDataConfig(AnalyzerDataConfig config)
         {
+
             this.DataConfig = config;
             config.AddOnEdit(OnDataEdit);
             drawer.SetDataConfig(config);
             OnDataEdit();
+
         }
 
         public void SetExtDataConfig(ExtDrawerDataConfig config)
         {
+
             this.ExtConfig = config;
             config.AddOnEdit(OnExtEdit);
             OnExtEdit();
+
         }
 
 
         public void OnResize()
         {
+
             drawer.SetSize(mainPictureBox.Size);
             mainPictureBox.Image = drawer.CurrentImage;
+
         }
 
         private void OnVisualEdit(bool force)
@@ -106,7 +114,6 @@ namespace AudioVisualizer.AudioSpectrum
                 drawer.SetDataConfig(DataConfig);
             }
             drawer.SetVisualConfig(VisualConfig);
-            timer.Interval = VisualConfig.UpdateMSec;
 
             OnResize();
         }

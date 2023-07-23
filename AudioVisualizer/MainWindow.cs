@@ -1,8 +1,11 @@
 ﻿using AudioVisualizer.AudioSpectrum;
 using AudioVisualizer.DataSaver;
+using Common;
 using Newtonsoft.Json;
 using System;
-using System.Drawing;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace AudioVisualizer
@@ -25,6 +28,7 @@ namespace AudioVisualizer
             //this.Location = new System.Drawing.Point(0, 0);
             //FormBorderStyle = FormBorderStyle.None;
             //this.Size = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Size;
+            //pbMain.Margin = new System.Windows.Forms.Padding(0, 0, 0, 40);
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -34,7 +38,7 @@ namespace AudioVisualizer
                 return;
             }
 
-            analyzerView.OnResize();
+            analyzerView?.OnResize();
 
             var json = JsonConvert.SerializeObject(this.Size, Formatting.Indented);
             Saver.Save(Saver.DataType.WindowSize, json);
@@ -44,7 +48,9 @@ namespace AudioVisualizer
         {
             if (e.Button == MouseButtons.Left)
             {
+                TopMost = true;
                 WindowState = FormWindowState.Normal;
+                TopMost = miOverAll.Checked;
             }
         }
 
@@ -73,6 +79,14 @@ namespace AudioVisualizer
             }
         }
 
+        private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            WindowUtils.RestartExplorer();
+        }
 
+        private void MiExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
