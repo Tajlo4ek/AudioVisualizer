@@ -44,7 +44,7 @@
             this.pbMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pbMain.Location = new System.Drawing.Point(0, 0);
             this.pbMain.Name = "pbMain";
-            this.pbMain.Size = new System.Drawing.Size(388, 190);
+            this.pbMain.Size = new System.Drawing.Size(617, 376);
             this.pbMain.TabIndex = 4;
             this.pbMain.TabStop = false;
             // 
@@ -83,7 +83,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(388, 190);
+            this.ClientSize = new System.Drawing.Size(617, 376);
             this.ContextMenuStrip = this.cmsMain;
             this.Controls.Add(this.pbMain);
             this.MinimumSize = new System.Drawing.Size(350, 150);

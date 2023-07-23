@@ -67,6 +67,10 @@
     <Compile Include="AudioSpectrum\Drawers\RectangleDrawer.cs" />
     <Compile Include="AudioSpectrum\FftConfig.cs" />
     <Compile Include="AudioSpectrum\Spectrum.cs" />
+    <Compile Include="Common\NativeConstants.cs" />
+    <Compile Include="Common\NativeMethods.cs" />
+    <Compile Include="Common\NativeTypes.cs" />
+    <Compile Include="Common\WindowUtils.cs" />
     <Compile Include="ConfigWindow.cs">
       <SubType>Form</SubType>
     </Compile>

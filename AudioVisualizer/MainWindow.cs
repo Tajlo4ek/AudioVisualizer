@@ -2,6 +2,7 @@
 using AudioVisualizer.DataSaver;
 using Newtonsoft.Json;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace AudioVisualizer
@@ -16,6 +17,12 @@ namespace AudioVisualizer
             InitializeComponent();
             analyzerView = new AnalyzerView(pbMain);
             configWindow = new ConfigWindow(analyzerView);
+
+            
+            //Common.WindowUtils.ShowBehindDesktop(this.Handle);
+            //this.Location = new System.Drawing.Point(0, 0);
+            //FormBorderStyle = FormBorderStyle.None;
+            //this.Size = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Size;
         }
 
         private void Form1_Resize(object sender, EventArgs e)
