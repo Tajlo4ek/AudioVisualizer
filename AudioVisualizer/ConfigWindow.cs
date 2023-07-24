@@ -6,41 +6,30 @@ namespace AudioVisualizer
 {
     public partial class ConfigWindow : Form
     {
-        private readonly AnalyzerView analyzerView;
-        private AnalyzerVisualConfig visualConfigurator;
-        private AnalyzerDataConfig dataConfigurator;
+        public AnalyzerVisualConfig VisualConfig { get; private set; }
+        public AnalyzerDataConfig DataConfig { get; private set; }
 
-        public ConfigWindow() : this(null)
-        {
-        }
-
-        public ConfigWindow(AnalyzerView analyzerView)
+        public ConfigWindow()
         {
             InitializeComponent();
+            LoadConfig();
 
-            if (analyzerView != null)
-            {
-                this.analyzerView = analyzerView;
-                this.visualConfigurator = analyzerView.VisualConfig;
-                this.dataConfigurator = analyzerView.DataConfig;
+            nudColSpace.ValueChanged += ConfigColumnNud_ValueChanged;
+            nudColCount.ValueChanged += ConfigColumnNud_ValueChanged;
+            nudRectHeight.ValueChanged += ConfigRectNud_ValueChanged;
+            nudRectSpace.ValueChanged += ConfigRectNud_ValueChanged;
 
-                LoadConfig();
+            cbVisual.SelectedValueChanged += CbVisual_SelectedValueChanged;
+            cbFftSize.SelectedValueChanged += CbFftSize_SelectedValueChanged;
 
-                nudColSpace.ValueChanged += ConfigColumnNud_ValueChanged;
-                nudColCount.ValueChanged += ConfigColumnNud_ValueChanged;
-                nudRectHeight.ValueChanged += ConfigRectNud_ValueChanged;
-                nudRectSpace.ValueChanged += ConfigRectNud_ValueChanged;
+            tbGain.ValueChanged += TbGain_ValueChanged;
 
-                cbVisual.SelectedValueChanged += CbVisual_SelectedValueChanged;
-                cbFftSize.SelectedValueChanged += CbFftSize_SelectedValueChanged;
-
-                tbGain.ValueChanged += TbGain_ValueChanged;
-            }
-        }        
+            cbOnDesktop.CheckedChanged += CbOnDesktop_CheckedChanged;
+        }
 
         private void ParseDataConfig()
         {
-            if (dataConfigurator != null)
+            if (DataConfig != null)
             {
                 cbDevice.Items.Clear();
                 foreach (var device in Analyzer.GetDeviceList())
@@ -48,14 +37,14 @@ namespace AudioVisualizer
                     cbDevice.Items.Add(device);
                 }
 
-                cbDevice.SelectedItem = dataConfigurator.ActiveDeviceName;
+                cbDevice.SelectedItem = DataConfig.ActiveDeviceName;
 
 
                 foreach (var type in Enum.GetValues(typeof(FftConfig.FftDataSizes)))
                 {
                     cbFftSize.Items.Add(type.ToString());
                 }
-                cbFftSize.SelectedItem = dataConfigurator.FftDataSize.ToString();
+                cbFftSize.SelectedItem = DataConfig.FftDataSize.ToString();
 
             }
 
@@ -63,85 +52,89 @@ namespace AudioVisualizer
 
         private void ParseVisualConfig()
         {
-            nudColSpace.Value = visualConfigurator.ColSpace;
-            nudColCount.Value = visualConfigurator.ColWidth;
-            nudRectSpace.Value = visualConfigurator.RectSpace;
-            nudRectHeight.Value = visualConfigurator.RectHeight;
+            nudColSpace.Value = VisualConfig.ColSpace;
+            nudColCount.Value = VisualConfig.ColWidth;
+            nudRectSpace.Value = VisualConfig.RectSpace;
+            nudRectHeight.Value = VisualConfig.RectHeight;
+            cbOnDesktop.Checked = VisualConfig.OnDesktop;
 
             foreach (var type in Enum.GetValues(typeof(AnalyzerVisualConfig.VisualStyle)))
             {
                 cbVisual.Items.Add(type.ToString());
             }
-            cbVisual.SelectedItem = visualConfigurator.Style.ToString();
+            cbVisual.SelectedItem = VisualConfig.Style.ToString();
 
-            tbGain.Value = (int)(visualConfigurator.Gain * 10);
+            tbGain.Value = (int)(VisualConfig.Gain * 10);
         }
 
         private void ConfigColumnNud_ValueChanged(object sender, EventArgs e)
         {
-            visualConfigurator.SetColumnConfig((int)nudColSpace.Value, (int)nudColCount.Value);
+            VisualConfig.SetColumnConfig((int)nudColSpace.Value, (int)nudColCount.Value);
             SaveConfig();
         }
 
         private void ConfigRectNud_ValueChanged(object sender, EventArgs e)
         {
-            visualConfigurator.SetRectConfig((int)nudRectSpace.Value, (int)nudRectHeight.Value);
+            VisualConfig.SetRectConfig((int)nudRectSpace.Value, (int)nudRectHeight.Value);
             SaveConfig();
         }
 
+        private void CbOnDesktop_CheckedChanged(object sender, EventArgs e)
+        {
+            VisualConfig.SetOnDesktop(cbOnDesktop.Checked);
+            SaveConfig();
+        }
 
         private void BtnStartStop_Click(object sender, EventArgs e)
         {
-            dataConfigurator.SetActiveDevise(cbDevice.SelectedItem.ToString());
+            DataConfig.SetActiveDevise(cbDevice.SelectedItem.ToString());
             SaveConfig();
         }
 
 
         private void BtnColorH_Click(object sender, EventArgs e)
         {
-            colorDialog.Color = visualConfigurator.HighLevelColor;
+            colorDialog.Color = VisualConfig.HighLevelColor;
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                visualConfigurator.HighLevelColor = colorDialog.Color;
+                VisualConfig.HighLevelColor = colorDialog.Color;
                 SaveConfig();
             }
         }
 
         private void BtnColorL_Click(object sender, EventArgs e)
         {
-            colorDialog.Color = visualConfigurator.LowLevelColor;
+            colorDialog.Color = VisualConfig.LowLevelColor;
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                visualConfigurator.LowLevelColor = colorDialog.Color;
+                VisualConfig.LowLevelColor = colorDialog.Color;
                 SaveConfig();
             }
         }
 
         private void BtnColorBack_Click(object sender, EventArgs e)
         {
-            colorDialog.Color = visualConfigurator.BackgroundColor;
+            colorDialog.Color = VisualConfig.BackgroundColor;
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                visualConfigurator.BackgroundColor = colorDialog.Color;
+                VisualConfig.BackgroundColor = colorDialog.Color;
                 SaveConfig();
             }
         }
 
-
         private void CbFftSize_SelectedValueChanged(object sender, EventArgs e)
         {
             var dataSize = (FftConfig.FftDataSizes)Enum.Parse(typeof(FftConfig.FftDataSizes), cbFftSize.SelectedItem.ToString());
-            dataConfigurator.SetFftDataSize(dataSize);
+            DataConfig.SetFftDataSize(dataSize);
             SaveConfig();
         }
 
         private void CbVisual_SelectedValueChanged(object sender, EventArgs e)
         {
             var style = (AnalyzerVisualConfig.VisualStyle)Enum.Parse(typeof(AnalyzerVisualConfig.VisualStyle), cbVisual.SelectedItem.ToString());
-            visualConfigurator.SetStyle(style);
+            VisualConfig.SetStyle(style);
             SaveConfig();
         }
-
 
         private void ConfigWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -152,31 +145,24 @@ namespace AudioVisualizer
 
         private void SaveConfig()
         {
-            DataSaver.Saver.Save(DataSaver.Saver.DataType.VisualConfig, visualConfigurator.GetSaveJson());
-            DataSaver.Saver.Save(DataSaver.Saver.DataType.DataConfig, dataConfigurator.GetSaveJson());
+            DataSaver.Saver.Save(DataSaver.Saver.DataType.VisualConfig, VisualConfig.GetSaveJson());
+            DataSaver.Saver.Save(DataSaver.Saver.DataType.DataConfig, DataConfig.GetSaveJson());
         }
 
         private void LoadConfig()
         {
             var json = DataSaver.Saver.Load(DataSaver.Saver.DataType.VisualConfig);
-            var configVisual = AnalyzerVisualConfig.Parse(json);
-            analyzerView.SetVisualConfig(configVisual);
-            visualConfigurator = analyzerView.VisualConfig;
+            VisualConfig = AnalyzerVisualConfig.Parse(json);
             ParseVisualConfig();
 
             json = DataSaver.Saver.Load(DataSaver.Saver.DataType.DataConfig);
-            var configData = AnalyzerDataConfig.Parse(json);
-            analyzerView.SetDataConfig(configData);
-            dataConfigurator = analyzerView.DataConfig;
+            DataConfig = AnalyzerDataConfig.Parse(json);
             ParseDataConfig();
-
-            analyzerView.SetVisualConfig(visualConfigurator);
-            analyzerView.SetDataConfig(dataConfigurator);
         }
 
         private void TbGain_ValueChanged(object sender, EventArgs e)
         {
-            visualConfigurator.SetGain((float)tbGain.Value / 10);
+            VisualConfig.SetGain((float)tbGain.Value / 10);
             SaveConfig();
         }
     }

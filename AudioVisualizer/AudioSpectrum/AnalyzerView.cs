@@ -11,7 +11,7 @@ namespace AudioVisualizer.AudioSpectrum
         private Spectrum leftSpectrum;
         private Spectrum rightSpectrum;
 
-        private readonly System.Windows.Forms.Timer timer;
+        private readonly Timer timer;
 
         private BaseDrawer drawer;
 
@@ -19,11 +19,11 @@ namespace AudioVisualizer.AudioSpectrum
 
         public AnalyzerDataConfig DataConfig { get; private set; }
 
-        public AnalyzerView(PictureBox pictureBox)
+        public AnalyzerView(AnalyzerDataConfig dataConfig, AnalyzerVisualConfig visualConfig, PictureBox pictureBox)
         {
             mainPictureBox = pictureBox;
 
-            timer = new System.Windows.Forms.Timer();
+            timer = new Timer();
             timer.Tick += Timer_tick;
             timer.Interval = 10;
             timer.Stop();
@@ -31,12 +31,10 @@ namespace AudioVisualizer.AudioSpectrum
             leftSpectrum = new Spectrum();
             rightSpectrum = new Spectrum();
 
-            VisualConfig = new AnalyzerVisualConfig();
-            VisualConfig.LoadDefault();
+            VisualConfig = visualConfig;
             VisualConfig.AddOnEdit(OnVisualEdit);
 
-            DataConfig = new AnalyzerDataConfig();
-            DataConfig.LoadDefault();
+            DataConfig = dataConfig;
             DataConfig.AddOnEdit(OnDataEdit);
 
             OnVisualEdit();
@@ -58,32 +56,10 @@ namespace AudioVisualizer.AudioSpectrum
             mainPictureBox.Image = drawer.CurrentImage;
         }
 
-        public void SetVisualConfig(AnalyzerVisualConfig config)
-        {
-
-            this.VisualConfig = config;
-            config.AddOnEdit(OnVisualEdit);
-            drawer.SetVisualConfig(config);
-            OnVisualEdit(true);
-
-        }
-
-        public void SetDataConfig(AnalyzerDataConfig config)
-        {
-
-            this.DataConfig = config;
-            config.AddOnEdit(OnDataEdit);
-            drawer.SetDataConfig(config);
-            OnDataEdit();
-
-        }
-
         public void OnResize()
         {
-
             drawer.SetSize(mainPictureBox.Size);
             mainPictureBox.Image = drawer.CurrentImage;
-
         }
 
         private void OnVisualEdit(bool force)

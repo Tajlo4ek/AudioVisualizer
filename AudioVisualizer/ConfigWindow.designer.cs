@@ -50,6 +50,7 @@
             this.cbVisual = new System.Windows.Forms.ComboBox();
             this.tbGain = new System.Windows.Forms.TrackBar();
             this.label6 = new System.Windows.Forms.Label();
+            this.cbOnDesktop = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudRectHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRectSpace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudColSpace)).BeginInit();
@@ -299,11 +300,22 @@
             this.label6.TabIndex = 21;
             this.label6.Text = "Gain";
             // 
+            // cbOnDesktop
+            // 
+            this.cbOnDesktop.AutoSize = true;
+            this.cbOnDesktop.Location = new System.Drawing.Point(219, 136);
+            this.cbOnDesktop.Name = "cbOnDesktop";
+            this.cbOnDesktop.Size = new System.Drawing.Size(81, 17);
+            this.cbOnDesktop.TabIndex = 22;
+            this.cbOnDesktop.Text = "On desktop";
+            this.cbOnDesktop.UseVisualStyleBackColor = true;
+            // 
             // ConfigWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(631, 215);
+            this.Controls.Add(this.cbOnDesktop);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tbGain);
             this.Controls.Add(this.cbVisual);
@@ -354,5 +366,6 @@
         private System.Windows.Forms.ComboBox cbVisual;
         private System.Windows.Forms.TrackBar tbGain;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox cbOnDesktop;
     }
 }

@@ -3,35 +3,75 @@ using AudioVisualizer.DataSaver;
 using Common;
 using Newtonsoft.Json;
 using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace AudioVisualizer
 {
-    public partial class MainWindow : Form
+    public partial class VisualizerWindow : Form
     {
         private readonly AnalyzerView analyzerView;
         private readonly ConfigWindow configWindow;
 
-        private bool isBackDesktop = true;
+        readonly Dispatcher uiThread;
 
-        public MainWindow()
+        private bool onDesktop;
+
+        public VisualizerWindow()
         {
             InitializeComponent();
-            analyzerView = new AnalyzerView(pbMain);
-            configWindow = new ConfigWindow(analyzerView);
+
+            configWindow = new ConfigWindow();
+            analyzerView = new AnalyzerView(configWindow.DataConfig, configWindow.VisualConfig, pbMain);
+
+            configWindow.VisualConfig.AddOnEdit(OnVisualConfigEdit);
+            uiThread = Dispatcher.CurrentDispatcher;
+
+            new Thread(() =>
+            {
+                Thread.Sleep(5000);
+                uiThread.Invoke(() => {
+                    SetOnDesktop(configWindow.VisualConfig.OnDesktop);
+                });               
+            }).Start();
+
+
 
             ShowInTaskbar = false;
             notifyIconMin.Visible = true;
+        }
 
-            isBackDesktop = false;
-            //Common.WindowUtils.ShowBehindDesktop(this.Handle);
-            //this.Location = new System.Drawing.Point(0, 0);
-            //FormBorderStyle = FormBorderStyle.None;
-            //this.Size = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Size;
-            //pbMain.Margin = new System.Windows.Forms.Padding(0, 0, 0, 40);
+        private void OnVisualConfigEdit()
+        {
+            if (onDesktop != configWindow.VisualConfig.OnDesktop)
+            {
+                SetOnDesktop(configWindow.VisualConfig.OnDesktop);
+            }
+        }
+
+        private void SetOnDesktop(bool val)
+        {
+            if (val)
+            {
+                WindowUtils.ShowBehindDesktop(this.Handle);
+                this.Location = new System.Drawing.Point(0, 0);
+                FormBorderStyle = FormBorderStyle.None;
+                this.Size = Screen.PrimaryScreen.Bounds.Size;
+                pbMain.Margin = new Padding(0, 0, 0, 40);
+            }
+            else
+            {
+                if (onDesktop == true)
+                {
+                    
+                }
+
+                FormBorderStyle = FormBorderStyle.Sizable;
+                pbMain.Margin = new Padding(0, 0, 0, 0);
+            }
+
+            onDesktop = val;
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -84,15 +124,12 @@ namespace AudioVisualizer
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (isBackDesktop)
-            {
-                WindowUtils.RestartExplorer();
-            }
+            WindowUtils.RestartExplorer();
         }
-
+        
         private void MiExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            Close();
         }
     }
 }

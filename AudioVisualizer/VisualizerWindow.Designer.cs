@@ -1,6 +1,6 @@
 ﻿namespace AudioVisualizer
 {
-    partial class MainWindow
+    partial class VisualizerWindow
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VisualizerWindow));
             this.pbMain = new System.Windows.Forms.PictureBox();
             this.cmsMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.miOverAll = new System.Windows.Forms.ToolStripMenuItem();

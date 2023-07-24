@@ -79,19 +79,19 @@
       <DependentUpon>ConfigWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="DataSaver\Saver.cs" />
-    <Compile Include="MainWindow.cs">
+    <Compile Include="VisualizerWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainWindow.Designer.cs">
-      <DependentUpon>MainWindow.cs</DependentUpon>
+    <Compile Include="VisualizerWindow.Designer.cs">
+      <DependentUpon>VisualizerWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ConfigWindow.resx">
       <DependentUpon>ConfigWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow.resx">
-      <DependentUpon>MainWindow.cs</DependentUpon>
+    <EmbeddedResource Include="VisualizerWindow.resx">
+      <DependentUpon>VisualizerWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
