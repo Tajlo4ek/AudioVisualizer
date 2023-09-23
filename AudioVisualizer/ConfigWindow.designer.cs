@@ -51,6 +51,7 @@
             this.tbGain = new System.Windows.Forms.TrackBar();
             this.label6 = new System.Windows.Forms.Label();
             this.cbOnDesktop = new System.Windows.Forms.CheckBox();
+            this.cbTranparent = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudRectHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRectSpace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudColSpace)).BeginInit();
@@ -215,6 +216,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbTranparent);
             this.groupBox1.Controls.Add(this.btnColorBack);
             this.groupBox1.Controls.Add(this.btnColorH);
             this.groupBox1.Controls.Add(this.btnColorL);
@@ -310,6 +312,16 @@
             this.cbOnDesktop.Text = "On desktop";
             this.cbOnDesktop.UseVisualStyleBackColor = true;
             // 
+            // cbTranparent
+            // 
+            this.cbTranparent.AutoSize = true;
+            this.cbTranparent.Location = new System.Drawing.Point(88, 54);
+            this.cbTranparent.Name = "cbTranparent";
+            this.cbTranparent.Size = new System.Drawing.Size(79, 17);
+            this.cbTranparent.TabIndex = 16;
+            this.cbTranparent.Text = "transparent";
+            this.cbTranparent.UseVisualStyleBackColor = true;
+            // 
             // ConfigWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -335,6 +347,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudColSpace)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudColCount)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbGain)).EndInit();
@@ -367,5 +380,6 @@
         private System.Windows.Forms.TrackBar tbGain;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox cbOnDesktop;
+        private System.Windows.Forms.CheckBox cbTranparent;
     }
 }

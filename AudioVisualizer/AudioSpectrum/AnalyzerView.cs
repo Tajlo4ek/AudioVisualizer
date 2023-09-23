@@ -39,10 +39,7 @@ namespace AudioVisualizer.AudioSpectrum
 
             OnVisualEdit();
             OnDataEdit();
-
-            timer.Start();
         }
-
 
         private void Timer_tick(object sender, EventArgs e)
         {
@@ -86,6 +83,16 @@ namespace AudioVisualizer.AudioSpectrum
                 Analyzer.Start(DataConfig.ActiveDeviceName);
             }
             OnResize();
+        }
+
+        public void Start()
+        {
+            timer.Start();
+        }
+
+        public void Stop()
+        {
+            timer.Stop();
         }
 
     }

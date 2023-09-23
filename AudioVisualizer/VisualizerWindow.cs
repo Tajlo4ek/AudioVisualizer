@@ -1,6 +1,5 @@
 ﻿using AudioVisualizer.AudioSpectrum;
 using AudioVisualizer.DataSaver;
-using Common;
 using Newtonsoft.Json;
 using System;
 using System.Threading;
@@ -14,10 +13,6 @@ namespace AudioVisualizer
         private readonly AnalyzerView analyzerView;
         private readonly ConfigWindow configWindow;
 
-        readonly Dispatcher uiThread;
-
-        private bool onDesktop;
-
         public VisualizerWindow()
         {
             InitializeComponent();
@@ -25,53 +20,14 @@ namespace AudioVisualizer
             configWindow = new ConfigWindow();
             analyzerView = new AnalyzerView(configWindow.DataConfig, configWindow.VisualConfig, pbMain);
 
-            configWindow.VisualConfig.AddOnEdit(OnVisualConfigEdit);
-            uiThread = Dispatcher.CurrentDispatcher;
-
-            new Thread(() =>
-            {
-                Thread.Sleep(5000);
-                uiThread.Invoke(() => {
-                    SetOnDesktop(configWindow.VisualConfig.OnDesktop);
-                });               
-            }).Start();
-
+            FormBorderStyle = FormBorderStyle.Sizable;
+            pbMain.Margin = new Padding(0, 0, 0, 0);
 
 
             ShowInTaskbar = false;
             notifyIconMin.Visible = true;
-        }
 
-        private void OnVisualConfigEdit()
-        {
-            if (onDesktop != configWindow.VisualConfig.OnDesktop)
-            {
-                SetOnDesktop(configWindow.VisualConfig.OnDesktop);
-            }
-        }
-
-        private void SetOnDesktop(bool val)
-        {
-            if (val)
-            {
-                WindowUtils.ShowBehindDesktop(this.Handle);
-                this.Location = new System.Drawing.Point(0, 0);
-                FormBorderStyle = FormBorderStyle.None;
-                this.Size = Screen.PrimaryScreen.Bounds.Size;
-                pbMain.Margin = new Padding(0, 0, 0, 40);
-            }
-            else
-            {
-                if (onDesktop == true)
-                {
-                    
-                }
-
-                FormBorderStyle = FormBorderStyle.Sizable;
-                pbMain.Margin = new Padding(0, 0, 0, 0);
-            }
-
-            onDesktop = val;
+            analyzerView.Start();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -124,9 +80,10 @@ namespace AudioVisualizer
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            WindowUtils.RestartExplorer();
+            analyzerView?.Stop();
+            configWindow?.Close();
         }
-        
+
         private void MiExit_Click(object sender, EventArgs e)
         {
             Close();

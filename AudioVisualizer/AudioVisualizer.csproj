@@ -46,6 +46,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -68,10 +71,6 @@
     <Compile Include="AudioSpectrum\Drawers\RectangleDrawer.cs" />
     <Compile Include="AudioSpectrum\FftConfig.cs" />
     <Compile Include="AudioSpectrum\Spectrum.cs" />
-    <Compile Include="Common\NativeConstants.cs" />
-    <Compile Include="Common\NativeMethods.cs" />
-    <Compile Include="Common\NativeTypes.cs" />
-    <Compile Include="Common\WindowUtils.cs" />
     <Compile Include="ConfigWindow.cs">
       <SubType>Form</SubType>
     </Compile>
