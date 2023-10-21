@@ -48,10 +48,6 @@ namespace AudioVisualizer.AudioSpectrum
         public float Gain { get; private set; }
 
         [JsonProperty]
-        public bool OnDesktop { get; private set; }
-
-
-        [JsonProperty]
         public Color BackgroundColor
         {
             get
@@ -118,7 +114,6 @@ namespace AudioVisualizer.AudioSpectrum
             LowLevelColor = Color.Green;
             HighLevelColor = Color.Red;
             Gain = 1;
-            OnDesktop = false;
 
             BackgroundColor = Color.Black;
             Style = VisualStyle.Rectangle;
@@ -143,12 +138,6 @@ namespace AudioVisualizer.AudioSpectrum
         public void SetStyle(VisualStyle style)
         {
             Style = style;
-            onEdit?.Invoke();
-        }
-
-        public void SetOnDesktop(bool val)
-        {
-            OnDesktop = val;
             onEdit?.Invoke();
         }
 

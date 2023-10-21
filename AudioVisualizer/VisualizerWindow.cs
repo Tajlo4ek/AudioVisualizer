@@ -26,6 +26,7 @@ namespace AudioVisualizer
 
             ShowInTaskbar = false;
             notifyIconMin.Visible = true;
+            KeyPreview = true;
 
             analyzerView.Start();
         }
@@ -35,6 +36,15 @@ namespace AudioVisualizer
             if (WindowState == FormWindowState.Minimized)
             {
                 return;
+            }
+
+            if (WindowState == FormWindowState.Maximized)
+            {
+                FormBorderStyle = FormBorderStyle.None;
+            }
+            else
+            {
+                FormBorderStyle = FormBorderStyle.Sizable;
             }
 
             analyzerView?.OnResize();
@@ -87,6 +97,17 @@ namespace AudioVisualizer
         private void MiExit_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void VisualizerWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (WindowState == FormWindowState.Maximized)
+                {
+                    WindowState = FormWindowState.Normal;
+                }
+            }
         }
     }
 }

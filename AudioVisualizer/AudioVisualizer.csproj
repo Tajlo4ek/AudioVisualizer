@@ -78,6 +78,7 @@
       <DependentUpon>ConfigWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="DataSaver\Saver.cs" />
+    <Compile Include="Utils\ColorUtils.cs" />
     <Compile Include="VisualizerWindow.cs">
       <SubType>Form</SubType>
     </Compile>

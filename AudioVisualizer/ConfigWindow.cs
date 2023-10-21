@@ -23,8 +23,6 @@ namespace AudioVisualizer
             cbFftSize.SelectedValueChanged += CbFftSize_SelectedValueChanged;
 
             tbGain.ValueChanged += TbGain_ValueChanged;
-
-            cbOnDesktop.CheckedChanged += CbOnDesktop_CheckedChanged;
         }
 
         private void ParseDataConfig()
@@ -56,7 +54,6 @@ namespace AudioVisualizer
             nudColCount.Value = VisualConfig.ColWidth;
             nudRectSpace.Value = VisualConfig.RectSpace;
             nudRectHeight.Value = VisualConfig.RectHeight;
-            cbOnDesktop.Checked = VisualConfig.OnDesktop;
 
             foreach (var type in Enum.GetValues(typeof(AnalyzerVisualConfig.VisualStyle)))
             {
@@ -76,12 +73,6 @@ namespace AudioVisualizer
         private void ConfigRectNud_ValueChanged(object sender, EventArgs e)
         {
             VisualConfig.SetRectConfig((int)nudRectSpace.Value, (int)nudRectHeight.Value);
-            SaveConfig();
-        }
-
-        private void CbOnDesktop_CheckedChanged(object sender, EventArgs e)
-        {
-            VisualConfig.SetOnDesktop(cbOnDesktop.Checked);
             SaveConfig();
         }
 

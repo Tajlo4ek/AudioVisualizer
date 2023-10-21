@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Runtime.ConstrainedExecution;
 
 namespace AudioVisualizer.AudioSpectrum
 {
@@ -47,11 +48,20 @@ namespace AudioVisualizer.AudioSpectrum
                 else
                 {
                     var delta = currentData[ind] - cur;
-                    currentData[ind] -= delta / 2;
+                    currentData[ind] -= delta / 10;
                 }
             }
 
-            TotalLoad = totalLoad;
+            if (totalLoad > 100) { totalLoad = 100; }
+            if (totalLoad > TotalLoad)
+            {
+                TotalLoad = totalLoad;
+            }
+            else
+            {
+                var delta = TotalLoad - totalLoad;
+                TotalLoad -= delta / 2;
+            }
         }
 
         public float[] GetCurrentData()

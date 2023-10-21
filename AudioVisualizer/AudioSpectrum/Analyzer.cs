@@ -141,8 +141,8 @@ namespace AudioVisualizer.AudioSpectrum
 
             int level = BassWasapi.BASS_WASAPI_GetLevel();
 
-            left.SetData(GetSpectrum(leftFft, colCount, gain, fftConfig), (float)Utils.LowWord32(level) / Int16.MaxValue * 100);
-            right.SetData(GetSpectrum(rightFft, colCount, gain, fftConfig), (float)Utils.HighWord32(level) / Int16.MaxValue * 100);
+            left.SetData(GetSpectrum(leftFft, colCount, gain, fftConfig), (float)Un4seen.Bass.Utils.LowWord32(level) / Int16.MaxValue * gain * 100);
+            right.SetData(GetSpectrum(rightFft, colCount, gain, fftConfig), (float)Un4seen.Bass.Utils.HighWord32(level) / Int16.MaxValue * gain * 100);
 
             return true;
         }
