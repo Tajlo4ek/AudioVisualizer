@@ -6,6 +6,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Net.NetworkInformation;
 using System.Windows.Forms;
 using AudioVisualizer.Utils;
+using System.Linq;
 
 namespace AudioVisualizer.AudioSpectrum.Drawers
 {
@@ -21,6 +22,11 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
 
         private RectangleF[] gridRects;
         private LinearGradientBrush backgroundBrush;
+
+        private float[] bufLoadLeft;
+        private float[] bufLoadRight;
+        private const int waveRectSize = 2;
+        private int waveWidth = 100;
 
         private void UpdateBackBrush()
         {
@@ -62,7 +68,7 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
             }
 
             imageHeight = CurrentImage.Height * pbPart > 300 ? 300 : (int)(CurrentImage.Height * pbPart);
-            scaleCoefY = (imageHeight) / 100;
+            scaleCoefY = imageHeight / 100.0f;
 
             var gridRects = new List<RectangleF>();
             var yPos = visualConfig.RectHeight + visualConfig.RectSpace;
@@ -77,6 +83,10 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
 
                 yPos += visualConfig.RectHeight + visualConfig.RectSpace;
             }
+
+            waveWidth = (int)(CurrentImage.Width / 2.0 - CurrentImage.Width / 8.0);
+            bufLoadLeft = new float[waveWidth / waveRectSize];
+            bufLoadRight = new float[waveWidth / waveRectSize];
 
             this.gridRects = gridRects.ToArray();
             UpdateBackBrush();
@@ -106,8 +116,30 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
 
             DrawGrid();
 
-            DrawLoad(leftSpectrum.TotalLoad, CurrentImage.Width / 2, 0);
-            DrawLoad(rightSpectrum.TotalLoad, CurrentImage.Width / 2, CurrentImage.Width / 2);
+            float loadSize = CurrentImage.Height * (1 - pbPart) - 10;
+            float posX = (CurrentImage.Width / 2 - loadSize) / 2;
+            float postY = 10;
+            DrawLoad(leftSpectrum.TotalLoad, loadSize, postY, posX);
+            DrawLoad(rightSpectrum.TotalLoad, loadSize, postY, posX + CurrentImage.Width / 2);
+
+            int lastIndex = bufLoadLeft.Length - 1;
+            for (int i = 0; i < lastIndex; i++)
+            {
+                bufLoadLeft[i] = bufLoadLeft[i + 1];
+                bufLoadRight[i] = bufLoadRight[i + 1];
+            }
+            bufLoadLeft[lastIndex] = leftSpectrum.TotalLoad;
+            bufLoadRight[lastIndex] = rightSpectrum.TotalLoad;
+
+            DrawWave(bufLoadLeft,
+                loadSize / 1.5f,
+                loadSize,
+                (CurrentImage.Width / 2 - waveWidth) / 2);
+
+            DrawWave(bufLoadRight,
+                loadSize / 1.5f,
+                loadSize,
+                CurrentImage.Width / 2 + (CurrentImage.Width / 2 - waveWidth) / 2);
 
             DrawSpectrumMax(leftMax, leftRectCount, 0);
             DrawSpectrumMax(rightMax, rightRectCount, rightOffset);
@@ -121,9 +153,9 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
             }
         }
 
-        private void DrawLoad(float load, float size, float rightOffset)
+        private void DrawLoad(float load, float size, float topOffset, float rightOffset)
         {
-            float outRadius = size / 2f / 2;
+            float outRadius = size / 2f;
             float inRadius = outRadius * 0.95f;
 
             const int steps = 100;
@@ -137,7 +169,7 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
             Color endColor = Color.Red;
             var colors = ColorUtils.GetGradients(startColor, endColor, steps);
 
-            PointF center = new PointF(size / 2 + rightOffset, outRadius + 20);
+            PointF center = new PointF(size / 2 + rightOffset, outRadius + topOffset);
 
             Color lineColor = endColor;
 
@@ -171,7 +203,6 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
             PointF p3Center = new PointF(inRadius * (float)Math.Cos(loadInPi) + center.X, inRadius * (float)Math.Sin(loadInPi) + center.Y);
 
             mainGraphics.FillPolygon(new SolidBrush(lineColor), new PointF[] { p1Center, p2Center, p3Center });
-
         }
 
         private void DrawSpectrumMax(float[] spectrumMaxData, int[] rectsCount, float offset)
@@ -199,6 +230,21 @@ namespace AudioVisualizer.AudioSpectrum.Drawers
             {
                 mainGraphics.FillRectangles(backgroundBrush, maxRects);
             }
+        }
+
+        private void DrawWave(float[] nowVal, float topPos, float bottomPos, float xOffset)
+        {
+            float centerPos = topPos + (bottomPos - topPos) / 2;
+            RectangleF[] rects = new RectangleF[nowVal.Length];
+
+            for (int i = 0; i < nowVal.Length; i++)
+            {
+                float size = (bottomPos - topPos) * nowVal[i] / 100;
+                if (size < 2) { size = 2; }
+                rects[i] = new RectangleF(xOffset + i * waveRectSize, centerPos - size / 2, waveRectSize, size);
+            }
+
+            mainGraphics.FillRectangles(new SolidBrush(Color.FromArgb(25, 100, 0)), rects);
         }
 
         private int[] DrawSpectrum(float[] spectrumCurData, float offset)

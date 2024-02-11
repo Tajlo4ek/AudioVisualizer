@@ -11,7 +11,7 @@ namespace AudioVisualizer.AudioSpectrum
         public enum VisualStyle
         {
             Rectangle,
-            Circle,
+            Circle
         }
 
         [JsonIgnore]
